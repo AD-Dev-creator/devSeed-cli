@@ -5,11 +5,9 @@ It uses automation scripts to save time on your project configuration.
 
 ## 🚀 Supported Technologies
 
-| Back-End   | Front-End |
-| ---------- | --------- |
-| Node.js    | Angular   |
-| TypeScript | React.js  |
-| Python     | Next.js   |
+| Back-End | | Node.js | | TypeScript | | Python |
+
+| Front-End | | Angular | | React.js | | Next.js |
 
 ## 📦 Installation
 
