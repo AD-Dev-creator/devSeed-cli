@@ -78,6 +78,31 @@ async function name() {
     } else {
       console.log("Invalid Front-End technology selected.");
     }
+  } else if (answers.projectType === "Fullstack") {
+    const backendPath = path.join(projectPath, "backend");
+    const frontendPath = path.join(projectPath, "frontend");
+
+    if (answers.backend === "Node.js") {
+      initNodeProject(backendPath);
+    } else if (answers.backend === "TypeScript") {
+      initTypeScriptProject(backendPath);
+    } else if (answers.backend === "Python") {
+      initPythonProject(backendPath);
+    } else {
+      console.log("Invalid Back-End technology selected.");
+      return;
+    }
+
+    if (answers.frontend === "React") {
+      initReactProject(frontendPath);
+    } else if (answers.frontend === "Next") {
+      initNextProject(frontendPath);
+    } else if (answers.frontend === "Angular") {
+      initAngularProject(frontendPath);
+    } else {
+      console.log("Invalid Front-End technology selected.");
+      return;
+    }
   }
 }
 

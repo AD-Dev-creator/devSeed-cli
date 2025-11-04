@@ -37,7 +37,7 @@ export function initPythonProject(projectPath) {
       ".gitignore",
       ".env",
       ".env.example",
-      "readme.md",
+      "README.md",
       "main.py",
       "routes.py",
       "app/__init__.py",
