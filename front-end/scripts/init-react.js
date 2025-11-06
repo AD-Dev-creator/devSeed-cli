@@ -23,6 +23,16 @@ export function initReactProject(projectPath) {
       stdio: "inherit",
     });
 
+    execSync(`npm install -D tailwindcss@3`, {
+      cwd: safeProjectPath,
+      stdio: "inherit",
+    });
+
+    execSync(`npx tailwindcss init`, {
+      cwd: safeProjectPath,
+      stdio: "inherit",
+    });
+
     const folder = ["src/components", "src/pages"];
 
     const files = [".env", ".env.example"];
@@ -31,9 +41,30 @@ export function initReactProject(projectPath) {
       fs.mkdirSync(path.join(safeProjectPath, folder), { recursive: true });
     });
 
-    files.forEach((file) => {
-      fs.writeFileSync(path.join(safeProjectPath, file), "");
-    });
+    fs.writeFileSync(
+      path.join(safeProjectPath, "tailwind.config.js"),
+      `/** @type {import('tailwindcss').Config} */
+    module.exports = {
+      content: [
+        "./src/**/*.{js,jsx,ts,tsx}",
+      ],
+      theme: {
+        extend: {
+          colors: {},
+          fontFamily: {},
+        },
+      },
+      plugins: [],
+    }
+    `
+    );
+
+    fs.writeFileSync(
+      path.join(safeProjectPath, "src", "index.css"),
+      `@tailwind base;
+@tailwind components;
+@tailwind utilities;`
+    );
 
     console.log("✅ React project initialized successfully!");
   } catch (error) {
