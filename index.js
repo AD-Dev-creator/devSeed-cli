@@ -8,6 +8,24 @@ import { initReactProject } from "./front-end/scripts/init-react.js";
 import { initNextProject } from "./front-end/scripts/init-next.js";
 
 async function name() {
+  const { welcome } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "welcome",
+      message: "Welcome to DevSeed CLI! Choose an option to get started:",
+      choices: [
+        { name: "Create New Project", value: "new" },
+        { name: "Add to an existing project", value: "existing" },
+        { name: "Exit", value: "exit" },
+      ],
+    },
+  ]);
+
+  if (welcome === "exit") {
+    console.log("Exiting DevSeed CLI. Goodbye!");
+    process.exit(0);
+  }
+
   const answers = await inquirer.prompt([
     {
       type: "input",
@@ -21,6 +39,7 @@ async function name() {
       name: "projectName",
       message: "Enter the project name:",
       default: "my-node-project",
+      when: (answers) => welcome === "new",
     },
 
     {
@@ -51,30 +70,39 @@ async function name() {
     },
   ]);
 
-  const projectPath = path.join(answers.location, answers.projectName);
+  answers.welcome = welcome;
 
-  if (!answers.projectName) {
+  const projectPath =
+    answers.welcome === "new"
+      ? path.join(answers.location, answers.projectName)
+      : answers.location;
+
+  if (answers.welcome === "new" && !answers.projectName) {
     console.log("Project name cannot be empty.");
     return;
   }
 
   if (answers.projectType === "Backend") {
+    const backendPath = path.join(projectPath, "backend");
+
     if (answers.backend === "Node.js") {
-      initNodeProject(projectPath);
+      initNodeProject(backendPath);
     } else if (answers.backend === "TypeScript") {
-      initTypeScriptProject(projectPath);
+      initTypeScriptProject(backendPath);
     } else if (answers.backend === "Python") {
-      initPythonProject(projectPath);
+      initPythonProject(backendPath);
     } else {
       console.log("Invalid Back-End technology selected.");
     }
   } else if (answers.projectType === "Frontend") {
+    const frontendPath = path.join(projectPath, "frontend");
+
     if (answers.frontend === "React") {
-      initReactProject(projectPath);
+      initReactProject(frontendPath);
     } else if (answers.frontend === "Next") {
-      initNextProject(projectPath);
+      initNextProject(frontendPath);
     } else if (answers.frontend === "Angular") {
-      initAngularProject(projectPath);
+      initAngularProject(frontendPath);
     } else {
       console.log("Invalid Front-End technology selected.");
     }
