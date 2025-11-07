@@ -1,11 +1,7 @@
 import inquirer from "inquirer";
 import path from "path";
-import { initNodeProject } from "./back-end/scripts/init-node.js";
-import { initPythonProject } from "./back-end/scripts/init-python.js";
-import { initTypeScriptProject } from "./back-end/scripts/init-typeScript.js";
-import { initAngularProject } from "./front-end/scripts/init-angular.js";
-import { initReactProject } from "./front-end/scripts/init-react.js";
-import { initNextProject } from "./front-end/scripts/init-next.js";
+import { backendSelector } from "./back-end/platformSelector.js";
+import { platformSelector } from "./front-end/platformSelector.js";
 
 async function name() {
   const { welcome } = await inquirer.prompt([
@@ -45,8 +41,15 @@ async function name() {
     {
       type: "list",
       name: "projectType",
-      choices: ["Backend", "Frontend", "Fullstack"],
+      choices: ["Web", "Mobile", "Desktop"],
       message: "Select the type of project you want to create:",
+    },
+
+    {
+      type: "list",
+      name: "projectLayer",
+      choices: ["Backend", "Frontend", "Fullstack"],
+      message: "Select the project layer you want to create:",
     },
 
     {
@@ -55,18 +58,29 @@ async function name() {
       choices: ["Node.js", "TypeScript", "Python"],
       message: "Select the Back-End technologies you want to use:",
       when: (answers) =>
-        answers.projectType === "Backend" ||
-        answers.projectType === "Fullstack",
+        answers.projectLayer === "Backend" ||
+        answers.projectLayer === "Fullstack",
     },
 
     {
       type: "list",
       name: "frontend",
-      choices: ["React", "Next", "Angular"],
+      choices: (answers) => {
+        switch (answers.projectType) {
+          case "Web":
+            return ["React", "Next", "Angular"];
+          case "Mobile":
+            return ["React Native", "Ionic"];
+          case "Desktop":
+            return ["Electron"];
+          default:
+            return [];
+        }
+      },
       message: "Select the Front-End technologies you want to use:",
       when: (answers) =>
-        answers.projectType === "Frontend" ||
-        answers.projectType === "Fullstack",
+        answers.projectLayer === "Frontend" ||
+        answers.projectLayer === "Fullstack",
     },
   ]);
 
@@ -82,55 +96,17 @@ async function name() {
     return;
   }
 
-  if (answers.projectType === "Backend") {
+  if (answers.projectLayer === "Backend") {
     const backendPath = path.join(projectPath, "backend");
-
-    if (answers.backend === "Node.js") {
-      initNodeProject(backendPath);
-    } else if (answers.backend === "TypeScript") {
-      initTypeScriptProject(backendPath);
-    } else if (answers.backend === "Python") {
-      initPythonProject(backendPath);
-    } else {
-      console.log("Invalid Back-End technology selected.");
-    }
-  } else if (answers.projectType === "Frontend") {
+    await backendSelector(answers, backendPath);
+  } else if (answers.projectLayer === "Frontend") {
     const frontendPath = path.join(projectPath, "frontend");
-
-    if (answers.frontend === "React") {
-      initReactProject(frontendPath);
-    } else if (answers.frontend === "Next") {
-      initNextProject(frontendPath);
-    } else if (answers.frontend === "Angular") {
-      initAngularProject(frontendPath);
-    } else {
-      console.log("Invalid Front-End technology selected.");
-    }
-  } else if (answers.projectType === "Fullstack") {
+    await platformSelector(answers, frontendPath);
+  } else if (answers.projectLayer === "Fullstack") {
     const backendPath = path.join(projectPath, "backend");
     const frontendPath = path.join(projectPath, "frontend");
-
-    if (answers.backend === "Node.js") {
-      initNodeProject(backendPath);
-    } else if (answers.backend === "TypeScript") {
-      initTypeScriptProject(backendPath);
-    } else if (answers.backend === "Python") {
-      initPythonProject(backendPath);
-    } else {
-      console.log("Invalid Back-End technology selected.");
-      return;
-    }
-
-    if (answers.frontend === "React") {
-      initReactProject(frontendPath);
-    } else if (answers.frontend === "Next") {
-      initNextProject(frontendPath);
-    } else if (answers.frontend === "Angular") {
-      initAngularProject(frontendPath);
-    } else {
-      console.log("Invalid Front-End technology selected.");
-      return;
-    }
+    await backendSelector(answers, backendPath);
+    await platformSelector(answers, frontendPath);
   }
 }
 
