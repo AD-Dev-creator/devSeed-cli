@@ -62,8 +62,6 @@ export const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, "../public")));
-
 app.use("/api", router);
 
 const PORT = process.env.PORT || 3000;
@@ -108,6 +106,7 @@ BCRYPT_SALT_ROUNDS=your_bcrypt_salt_rounds
     const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
     pkg.scripts = pkg.scripts || {};
     pkg.scripts.start = "nodemon src/main.js";
+    pkg.type = "module";
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
 
     console.log("✅ Structure and dependencies installed!");

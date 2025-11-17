@@ -1,6 +1,9 @@
-import { initAngularProject } from "./scripts/init-angular.js";
-import { initReactProject } from "./scripts/init-react.js";
-import { initNextProject } from "./scripts/init-next.js";
+import { initAngularProject } from "./scripts/web/init-angular.js";
+import { initReactProject } from "./scripts/web/init-react.js";
+import { initNextProject } from "./scripts/web/init-next.js";
+import { initReactNativeProject } from "./scripts/mobile/init-react-native.js";
+import { initIonicProject } from "./scripts/mobile/init-ionic.js";
+import { initElectronProject } from "./scripts/desktop/init-electron.js";
 
 export async function platformSelector(answers, locationPath) {
   try {
@@ -24,12 +27,10 @@ export async function platformSelector(answers, locationPath) {
 
     switch (mobile) {
       case "React Native":
-        console.log(
-          "React Native project initialization is not yet implemented."
-        );
+        await initReactNativeProject(answers, locationPath);
         break;
       case "Ionic":
-        console.log("Ionic project initialization is not yet implemented.");
+        await initIonicProject(answers, locationPath);
         break;
       default:
         break;
@@ -39,7 +40,7 @@ export async function platformSelector(answers, locationPath) {
 
     switch (desktop) {
       case "Electron":
-        console.log("Electron project initialization is not yet implemented.");
+        await initElectronProject(answers, locationPath);
         break;
       default:
         break;

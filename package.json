@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "description": "This project allows you to create a new project with the appropriate dependencies based on your choice, whether it's a front-end or back-end stack.   It uses automation scripts to save time on your project configuration.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "init:node": "node back-end/scripts/init-node.js",
     "init:typescript": "node back-end/scripts/init-typescript.js",
     "init:python": "node back-end/scripts/init-python.js",
-    "init:react": "node front-end/scripts/init-react.js",
-    "init:next": "node front-end/scripts/init-next.js",
-    "init:angular": "node front-end/scripts/init-angular.js"
+    "init:react": "node front-end/scripts/web/init-react.js",
+    "init:next": "node front-end/scripts/web/init-next.js",
+    "init:angular": "node front-end/scripts/web/init-angular.js",
+    "init:reactnative": "node front-end/scripts/mobile/init-reactnative.js",
+    "init:ionic": "node front-end/scripts/mobile/init-ionic.js",
+    "init:electron": "node front-end/scripts/desktop/init-electron.js"
   },
   "repository": {
     "type": "git",
