@@ -117,6 +117,10 @@ npm start
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
 
     console.log("✅ Structure and dependencies installed!");
+    console.log(`📁 Project created at: ${projectPath}`);
+    console.log(`📝 To get started:`);
+    console.log(`   cd ${projectPath}`);
+    console.log(`   Start the development server with: npm start`);
   } catch (error) {
     console.error("❌ Error initializing Node.js project:", error);
   }

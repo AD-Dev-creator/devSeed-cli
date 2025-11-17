@@ -4,13 +4,6 @@ import path from "path";
 
 export function initReactProject(projectPath) {
   try {
-    if (fs.existsSync(projectPath)) {
-      console.error(
-        "❌ Directory already exists. Please choose a different project name or location."
-      );
-      return;
-    }
-
     execSync(`npx create-react-app "${projectPath}"`, {
       stdio: "inherit",
     });
@@ -66,6 +59,10 @@ export function initReactProject(projectPath) {
     );
 
     console.log("✅ React project initialized successfully!");
+    console.log(`📁 Project created at: ${projectPath}`);
+    console.log(`📝 To get started:`);
+    console.log(`   cd ${projectPath}`);
+    console.log(`   Start the development server with: npm start`);
   } catch (error) {
     console.error("❌ Error initializing React project:", error);
   }

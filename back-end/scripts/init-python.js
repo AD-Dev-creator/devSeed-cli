@@ -165,6 +165,11 @@ uvicorn main:app --reload
     }
 
     console.log("✅ Python project initialized successfully.");
+    console.log(`📁 Project created at: ${projectPath}`);
+    console.log(`📝 To get started:`);
+    console.log(`   cd ${projectPath}`);
+    console.log(`   Activate virtual environment: source venv/bin/activate`);
+    console.log(`   Start the FastAPI server: uvicorn main:app --reload`);
   } catch (error) {
     console.error("❌ Error initializing Python project:", error);
   }

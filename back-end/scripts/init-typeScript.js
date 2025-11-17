@@ -166,7 +166,11 @@ npm run dev
     pkg.scripts.test = "jest";
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
 
-    console.log("✅ Structure, dependencies, and Jest installed!");
+    console.log("✅ TypeScript project initialized successfully!");
+    console.log(`📁 Project created at: ${projectPath}`);
+    console.log(`📝 To get started:`);
+    console.log(`   cd ${projectPath}`);
+    console.log(`   Start the development server: npm run dev`);
   } catch (error) {
     console.error("❌ Error initializing TypeScript project:", error);
   }
