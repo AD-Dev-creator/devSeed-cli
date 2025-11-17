@@ -1,47 +1,35 @@
-import { initAngularProject } from "./scripts/init-angular.js";
-import { initReactProject } from "./scripts/init-react.js";
-import { initNextProject } from "./scripts/init-next.js";
+import { initReactProject } from "./scripts/web/init-react.js";
+import { initNextProject } from "./scripts/web/init-next.js";
+import { initAngularProject } from "./scripts/web/init-angular.js";
+import { initReactNativeProject } from "./scripts/mobile/init-react-native.js";
+import { initIonicProject } from "./scripts/mobile/init-ionic.js";
+import { initElectronProject } from "./scripts/desktop/init-electron.js";
 
 export async function platformSelector(answers, locationPath) {
   try {
-    const { web } = answers;
+    const { frontend } = answers;
 
-    switch (web) {
+    switch (frontend) {
       case "React":
-        await initReactProject(answers, locationPath);
+        initReactProject(locationPath);
         break;
-      case "Next.js":
-        await initNextProject(answers, locationPath);
+      case "Next":
+        initNextProject(locationPath);
         break;
       case "Angular":
-        await initAngularProject(answers, locationPath);
+        initAngularProject(locationPath);
         break;
-      default:
-        break;
-    }
-
-    const { mobile } = answers;
-
-    switch (mobile) {
       case "React Native":
-        console.log(
-          "React Native project initialization is not yet implemented."
-        );
+        initReactNativeProject(locationPath);
         break;
       case "Ionic":
-        console.log("Ionic project initialization is not yet implemented.");
+        initIonicProject(locationPath);
         break;
-      default:
-        break;
-    }
-
-    const { desktop } = answers;
-
-    switch (desktop) {
       case "Electron":
-        console.log("Electron project initialization is not yet implemented.");
+        initElectronProject(locationPath);
         break;
       default:
+        console.log("No valid front-end technology selected.");
         break;
     }
   } catch (error) {

@@ -4,45 +4,37 @@ import path from "path";
 
 export function initReactProject(projectPath) {
   try {
-    const projectName = path
-      .basename(projectPath)
-      .toLowerCase()
-      .replace(/[^a-z0-9-_]/g, "");
-    const safeProjectPath = path.join(path.dirname(projectPath), projectName);
-
-    if (!fs.existsSync(safeProjectPath)) {
-      fs.mkdirSync(projectPath, { recursive: true });
-    }
-
-    execSync(`npx create-react-app ${safeProjectPath}`, {
+    execSync(`npx create-react-app "${projectPath}"`, {
       stdio: "inherit",
     });
 
     execSync(`npm install axios react-router-dom`, {
-      cwd: safeProjectPath,
+      cwd: projectPath,
       stdio: "inherit",
     });
 
     execSync(`npm install -D tailwindcss@3`, {
-      cwd: safeProjectPath,
+      cwd: projectPath,
       stdio: "inherit",
     });
 
     execSync(`npx tailwindcss init`, {
-      cwd: safeProjectPath,
+      cwd: projectPath,
       stdio: "inherit",
     });
 
-    const folder = ["src/components", "src/pages"];
+    const folders = ["src/components", "src/pages"];
+    folders.forEach((folder) => {
+      fs.mkdirSync(path.join(projectPath, folder), { recursive: true });
+    });
 
     const files = [".env", ".env.example"];
-
-    folder.forEach((folder) => {
-      fs.mkdirSync(path.join(safeProjectPath, folder), { recursive: true });
+    files.forEach((file) => {
+      fs.writeFileSync(path.join(projectPath, file), "");
     });
 
     fs.writeFileSync(
-      path.join(safeProjectPath, "tailwind.config.js"),
+      path.join(projectPath, "tailwind.config.js"),
       `/** @type {import('tailwindcss').Config} */
     module.exports = {
       content: [
@@ -60,13 +52,17 @@ export function initReactProject(projectPath) {
     );
 
     fs.writeFileSync(
-      path.join(safeProjectPath, "src", "index.css"),
+      path.join(projectPath, "src", "index.css"),
       `@tailwind base;
 @tailwind components;
 @tailwind utilities;`
     );
 
     console.log("✅ React project initialized successfully!");
+    console.log(`📁 Project created at: ${projectPath}`);
+    console.log(`📝 To get started:`);
+    console.log(`   cd ${projectPath}`);
+    console.log(`   Start the development server with: npm start`);
   } catch (error) {
     console.error("❌ Error initializing React project:", error);
   }

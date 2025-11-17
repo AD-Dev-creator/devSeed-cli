@@ -121,6 +121,13 @@ DB_NAME=your_db_name
 JWT_SECRET=your_jwt_secret
 BCRYPT_SALT_ROUNDS=your_bcrypt_salt_rounds
 `;
+      } else if (file === "README.md") {
+        content = `# TypeScript Node.js Project
+          Run Server:
+  \`\`\`bash
+npm run dev
+\`\`\`
+`;
       }
       fs.writeFileSync(path.join(projectPath, file), content);
     });
@@ -159,7 +166,11 @@ BCRYPT_SALT_ROUNDS=your_bcrypt_salt_rounds
     pkg.scripts.test = "jest";
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
 
-    console.log("✅ Structure, dependencies, and Jest installed!");
+    console.log("✅ TypeScript project initialized successfully!");
+    console.log(`📁 Project created at: ${projectPath}`);
+    console.log(`📝 To get started:`);
+    console.log(`   cd ${projectPath}`);
+    console.log(`   Start the development server: npm run dev`);
   } catch (error) {
     console.error("❌ Error initializing TypeScript project:", error);
   }

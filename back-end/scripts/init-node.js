@@ -62,8 +62,6 @@ export const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname, "../public")));
-
 app.use("/api", router);
 
 const PORT = process.env.PORT || 3000;
@@ -99,6 +97,13 @@ DB_NAME=your_db_name
 JWT_SECRET=your_jwt_secret
 BCRYPT_SALT_ROUNDS=your_bcrypt_salt_rounds
 `;
+      } else if (file === "README.md") {
+        content = `# Node.js Backend Project
+  Run Server:
+  \`\`\`bash
+npm start
+\`\`\`
+`;
       }
       fs.writeFileSync(path.join(projectPath, file), content);
     });
@@ -108,9 +113,14 @@ BCRYPT_SALT_ROUNDS=your_bcrypt_salt_rounds
     const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
     pkg.scripts = pkg.scripts || {};
     pkg.scripts.start = "nodemon src/main.js";
+    pkg.type = "module";
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
 
     console.log("✅ Structure and dependencies installed!");
+    console.log(`📁 Project created at: ${projectPath}`);
+    console.log(`📝 To get started:`);
+    console.log(`   cd ${projectPath}`);
+    console.log(`   Start the development server with: npm start`);
   } catch (error) {
     console.error("❌ Error initializing Node.js project:", error);
   }

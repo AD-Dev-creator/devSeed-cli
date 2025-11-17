@@ -15,6 +15,15 @@ export function initPythonProject(projectPath) {
       stdio: "inherit",
     });
 
+    const pythonBin =
+      process.platform === "win32"
+        ? path.join("venv", "Scripts", "python.exe")
+        : path.join("venv", "bin", "python3");
+    execSync(`${pythonBin} -m pip install --upgrade pip`, {
+      cwd: projectPath,
+      stdio: "inherit",
+    });
+
     const pipPath =
       process.platform === "win32"
         ? path.join(projectPath, "venv", "Scripts", "pip.exe")
@@ -44,6 +53,7 @@ export function initPythonProject(projectPath) {
       "tests/__init__.py",
       "app/database/__init__.py",
       "app/database/db.py",
+      "app/database/models.py",
     ];
 
     folders.forEach((folder) => {
@@ -84,10 +94,37 @@ def read_root():
     return {"message": "API turning on PORT 8000"}
 `;
       } else if (file === "routes.py") {
-        content = `from fastapi import APIRouter
+        content = `
+from fastapi import APIRouter
 
 all_routes = []
 `;
+      } else if (file === "app/database/__init__.py") {
+        content = `from .db import Base, engine
+        `;
+      } else if (file === "app/database/db.py") {
+        content = `
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+from dotenv import load_dotenv
+import os
+      
+load_dotenv()
+      
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
+      
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+      
+Base = declarative_base()
+      `;
+      } else if (file === "app/database/models.py") {
+        content = `
+from .db import Base
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Enum, DateTime, Table
+from sqlalchemy.orm import relationship
+from datetime import datetime
+      `;
       } else if (file === ".env") {
         content = `DATABASE_URL=sqlite:///./your_database.db
 `;
@@ -99,6 +136,20 @@ all_routes = []
 __pycache__/
 *.pyc
 .env
+`;
+      } else if (file === "README.md") {
+        content = `# FastAPI Project
+
+Activate virtual environment:
+\`\`\`bash
+source venv/bin/activate  
+# On Windows use: venv\\Scripts\\activate
+\`\`\`
+
+Start your FastAPI : 
+\`\`\`bash
+uvicorn main:app --reload
+\`\`\`
 `;
       }
       fs.writeFileSync(path.join(projectPath, file), content);
@@ -114,6 +165,11 @@ __pycache__/
     }
 
     console.log("✅ Python project initialized successfully.");
+    console.log(`📁 Project created at: ${projectPath}`);
+    console.log(`📝 To get started:`);
+    console.log(`   cd ${projectPath}`);
+    console.log(`   Activate virtual environment: source venv/bin/activate`);
+    console.log(`   Start the FastAPI server: uvicorn main:app --reload`);
   } catch (error) {
     console.error("❌ Error initializing Python project:", error);
   }
