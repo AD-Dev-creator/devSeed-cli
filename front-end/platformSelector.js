@@ -1,48 +1,35 @@
-import { initAngularProject } from "./scripts/web/init-angular.js";
 import { initReactProject } from "./scripts/web/init-react.js";
 import { initNextProject } from "./scripts/web/init-next.js";
+import { initAngularProject } from "./scripts/web/init-angular.js";
 import { initReactNativeProject } from "./scripts/mobile/init-react-native.js";
 import { initIonicProject } from "./scripts/mobile/init-ionic.js";
 import { initElectronProject } from "./scripts/desktop/init-electron.js";
 
 export async function platformSelector(answers, locationPath) {
   try {
-    const { web } = answers;
+    const { frontend } = answers;
 
-    switch (web) {
+    switch (frontend) {
       case "React":
-        await initReactProject(answers, locationPath);
+        initReactProject(locationPath);
         break;
-      case "Next.js":
-        await initNextProject(answers, locationPath);
+      case "Next":
+        initNextProject(locationPath);
         break;
       case "Angular":
-        await initAngularProject(answers, locationPath);
+        initAngularProject(locationPath);
         break;
-      default:
-        break;
-    }
-
-    const { mobile } = answers;
-
-    switch (mobile) {
       case "React Native":
-        await initReactNativeProject(answers, locationPath);
+        initReactNativeProject(locationPath);
         break;
       case "Ionic":
-        await initIonicProject(answers, locationPath);
+        initIonicProject(locationPath);
         break;
-      default:
-        break;
-    }
-
-    const { desktop } = answers;
-
-    switch (desktop) {
       case "Electron":
-        await initElectronProject(answers, locationPath);
+        initElectronProject(locationPath);
         break;
       default:
+        console.log("No valid front-end technology selected.");
         break;
     }
   } catch (error) {
