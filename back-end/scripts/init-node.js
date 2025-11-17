@@ -97,6 +97,13 @@ DB_NAME=your_db_name
 JWT_SECRET=your_jwt_secret
 BCRYPT_SALT_ROUNDS=your_bcrypt_salt_rounds
 `;
+      } else if (file === "README.md") {
+        content = `# Node.js Backend Project
+  Run Server:
+  \`\`\`bash
+npm start
+\`\`\`
+`;
       }
       fs.writeFileSync(path.join(projectPath, file), content);
     });
