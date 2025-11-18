@@ -27,11 +27,6 @@ export function initNextProject(projectPath) {
       stdio: "inherit",
     });
 
-    execSync(`npx tailwindcss init`, {
-      cwd: projectPath,
-      stdio: "inherit",
-    });
-
     const folders = ["src/components"];
     folders.forEach((folder) => {
       fs.mkdirSync(path.join(projectPath, folder), { recursive: true });

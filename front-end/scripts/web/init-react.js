@@ -18,11 +18,6 @@ export function initReactProject(projectPath) {
       stdio: "inherit",
     });
 
-    execSync(`npx tailwindcss init`, {
-      cwd: projectPath,
-      stdio: "inherit",
-    });
-
     const folders = ["src/components", "src/pages"];
     folders.forEach((folder) => {
       fs.mkdirSync(path.join(projectPath, folder), { recursive: true });
