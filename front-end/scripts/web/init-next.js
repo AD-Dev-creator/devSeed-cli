@@ -4,8 +4,6 @@ import path from "path";
 
 export function initNextProject(projectPath) {
   try {
-    const projectName = path.basename(path.dirname(projectPath));
-    const parentDir = path.dirname(path.dirname(projectPath));
     const projectDir = path.dirname(projectPath);
 
     if (!fs.existsSync(projectDir)) {
@@ -17,13 +15,13 @@ export function initNextProject(projectPath) {
       stdio: "inherit",
     });
 
-    execSync(`npm install axios`, {
-      cwd: projectPath,
+    execSync(`npm install axios lucide-react`, {
+      cwd: path.join(projectDir, "frontend"),
       stdio: "inherit",
     });
 
     execSync(`npm install -D tailwindcss@3`, {
-      cwd: projectPath,
+      cwd: path.join(projectDir, "frontend"),
       stdio: "inherit",
     });
 

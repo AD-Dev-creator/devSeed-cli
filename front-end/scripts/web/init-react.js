@@ -8,7 +8,7 @@ export function initReactProject(projectPath) {
       stdio: "inherit",
     });
 
-    execSync(`npm install axios react-router-dom`, {
+    execSync(`npm install axios react-router-dom lucide-react`, {
       cwd: projectPath,
       stdio: "inherit",
     });
