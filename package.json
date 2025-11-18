@@ -1,5 +1,5 @@
 {
-  "name": "devseed-cli",
+  "name": "test",
   "version": "1.0.0",
   "description": "This project allows you to create a new project with the appropriate dependencies based on your choice, whether it's a front-end or back-end stack.   It uses automation scripts to save time on your project configuration.",
   "main": "index.js",
