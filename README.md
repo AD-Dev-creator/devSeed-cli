@@ -30,7 +30,7 @@ npm install
 
 | 🖥️ **Back-End** | ![Node.js] | ![TypeScript] | ![Python] |
 | 🎨 **Front-End** | ![Angular] | ![React.js] | ![Next.Ts] |
-| 📱 **Mobile** | ![React Native]| ![Ionic] |
+| 📱 **Mobile** | ![React Native] |
 | 🖥️ **Desktop** | ![Electron] |
 
 ---
