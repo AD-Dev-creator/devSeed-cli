@@ -13,7 +13,7 @@ export function initElectronProject(projectPath) {
       stdio: "inherit",
     });
 
-    execSync(`npm install -D tailwindcss@3`, {
+    execSync(`npm install -D tailwindcss@3 cross-env electron-builder`, {
       cwd: projectPath,
       stdio: "inherit",
     });
@@ -184,7 +184,7 @@ module.exports = {
     packageJson.scripts = {
       ...packageJson.scripts,
       electron: "electron .",
-      "electron-dev": "ELECTRON_IS_DEV=true electron .",
+      "electron-dev": "cross-env ELECTRON_IS_DEV=true electron .",
       "electron-start":
         'concurrently "npm start" "wait-on http://localhost:3000 && npm run electron-dev"',
       "build-electron": "npm run build && electron-builder",
