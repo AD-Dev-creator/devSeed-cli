@@ -34,6 +34,7 @@ export function initNodeProject(projectPath) {
     const files = [
       ".gitignore",
       ".env",
+      "README.md",
       ".env.example",
       "src/main.js",
       "src/routes.js",
@@ -46,17 +47,80 @@ export function initNodeProject(projectPath) {
     });
 
     files.forEach((file) => {
-      fs.writeFileSync(path.join(projectPath, file), "");
+      let content = "";
+      if (file === "src/main.js") {
+        content = `import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import dotenv from "dotenv";
+import { router } from "./routes.js";
+
+dotenv.config();
+
+export const app = express();
+
+app.use(cors());
+app.use(bodyParser.json());
+
+app.use("/api", router);
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(\`Server is running on port \${PORT}\`);
+});
+`;
+      } else if (file === "src/routes.js") {
+        content = `import { Router } from "express";
+
+export const router = Router();
+`;
+      } else if (file === ".gitignore") {
+        content = `node_modules
+.env
+`;
+      } else if (file === ".env") {
+        content = `PORT=3000
+DB_HOST=your_db_host
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_NAME=your_db_name
+JWT_SECRET=your_jwt_secret
+BCRYPT_SALT_ROUNDS=10
+`;
+      } else if (file === ".env.example") {
+        content = `PORT=your_port
+DB_HOST=your_db_host
+DB_USER=your_db_user
+DB_PASSWORD=your_db_password
+DB_NAME=your_db_name
+JWT_SECRET=your_jwt_secret
+BCRYPT_SALT_ROUNDS=your_bcrypt_salt_rounds
+`;
+      } else if (file === "README.md") {
+        content = `# Node.js Backend Project
+  Run Server:
+  \`\`\`bash
+npm start
+\`\`\`
+`;
+      }
+      fs.writeFileSync(path.join(projectPath, file), content);
     });
 
     // Add start script to package.json
     const pkgPath = path.join(projectPath, "package.json");
     const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
     pkg.scripts = pkg.scripts || {};
-    pkg.scripts.start = "nodemon src/server.js";
+    pkg.scripts.start = "nodemon src/main.js";
+    pkg.type = "module";
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));
 
     console.log("✅ Structure and dependencies installed!");
+    console.log(`📁 Project created at: ${projectPath}`);
+    console.log(`📝 To get started:`);
+    console.log(`   cd ${projectPath}`);
+    console.log(`   Start the development server with: npm start`);
   } catch (error) {
     console.error("❌ Error initializing Node.js project:", error);
   }
