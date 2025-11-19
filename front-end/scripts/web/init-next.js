@@ -8,10 +8,13 @@ export function initNextProject(projectPath) {
       fs.mkdirSync(projectPath, { recursive: true });
     }
 
-    execSync(`npx create-next-app@latest "${projectPath}" --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"`, {
-      stdio: "inherit",
-      shell: true,
-    });
+    execSync(
+      `npx create-next-app@latest "${projectPath}" --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"`,
+      {
+        stdio: "inherit",
+        shell: true,
+      }
+    );
 
     execSync(`npm install axios lucide-react`, {
       cwd: projectPath,
@@ -42,13 +45,11 @@ module.exports = {
 `
     );
 
-    // Créer le dossier components dans src
     const componentsPath = path.join(projectPath, "src", "components");
     if (!fs.existsSync(componentsPath)) {
       fs.mkdirSync(componentsPath, { recursive: true });
     }
 
-    // Vérifier si le fichier globals.css existe déjà et le mettre à jour
     const globalsCssPath = path.join(projectPath, "src", "app", "globals.css");
     if (fs.existsSync(globalsCssPath)) {
       fs.writeFileSync(
@@ -58,7 +59,6 @@ module.exports = {
 @tailwind utilities;`
       );
     } else {
-      // Fallback pour l'ancienne structure
       const fallbackPath = path.join(projectPath, "app", "globals.css");
       if (fs.existsSync(fallbackPath)) {
         fs.writeFileSync(
