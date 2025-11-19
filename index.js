@@ -70,9 +70,9 @@ async function name() {
           case "Web":
             return ["React", "Next", "Angular"];
           case "Mobile":
-            return ["React Native", "Ionic"];
+            return ["React Native"];
           case "Desktop":
-            return ["Electron"];
+            return ["Electron + React"];
           default:
             return [];
         }

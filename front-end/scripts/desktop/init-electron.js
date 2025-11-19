@@ -43,6 +43,41 @@ export function initElectronProject(projectPath) {
       fs.writeFileSync(path.join(projectPath, file), "");
     });
 
+    const readmePath = path.join(projectPath, "README.md");
+    let readmeContent = "";
+
+    if (fs.existsSync(readmePath)) {
+      readmeContent = fs.readFileSync(readmePath, "utf8");
+    }
+
+    // Add Electron instructions to README
+    const electronInstructions = `
+
+## Electron Commands
+
+\`\`\`bash
+npm run electron-start  # Start React + Electron automatically
+\`\`\`
+
+OR manually:
+
+\`\`\`bash
+npm start               # Start React dev server first
+npm run electron-dev    # Then start Electron in another terminal
+npm run build-electron  # Build for production
+\`\`\`
+
+## Available Electron Scripts
+
+- \`npm run electron\` - Run Electron
+- \`npm run electron-dev\` - Run Electron in development mode
+- \`npm run electron-start\` - Start React and Electron concurrently
+- \`npm run build-electron\` - Build for production
+- \`npm run dist\` - Create distributable packages
+`;
+
+    fs.writeFileSync(readmePath, readmeContent + electronInstructions);
+
     fs.writeFileSync(
       path.join(projectPath, "tailwind.config.js"),
       `/** @type {import('tailwindcss').Config} */

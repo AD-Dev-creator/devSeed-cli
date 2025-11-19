@@ -4,25 +4,25 @@ import path from "path";
 
 export function initNextProject(projectPath) {
   try {
-    const projectDir = path.dirname(projectPath);
-
-    if (!fs.existsSync(projectDir)) {
-      fs.mkdirSync(projectDir, { recursive: true });
+    if (!fs.existsSync(projectPath)) {
+      fs.mkdirSync(projectPath, { recursive: true });
     }
 
-    execSync(`npx create-next-app@latest frontend --yes --typescript`, {
-      cwd: projectDir,
+    execSync(`npx create-next-app@latest "${projectPath}" --yes --typescript`, {
       stdio: "inherit",
+      shell: true,
     });
 
     execSync(`npm install axios lucide-react`, {
-      cwd: path.join(projectDir, "frontend"),
+      cwd: projectPath,
       stdio: "inherit",
+      shell: true,
     });
 
     execSync(`npm install -D tailwindcss@3`, {
-      cwd: path.join(projectDir, "frontend"),
+      cwd: projectPath,
       stdio: "inherit",
+      shell: true,
     });
 
     const folders = ["src/components"];

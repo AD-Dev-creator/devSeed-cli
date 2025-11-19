@@ -2,7 +2,6 @@ import { initReactProject } from "./scripts/web/init-react.js";
 import { initNextProject } from "./scripts/web/init-next.js";
 import { initAngularProject } from "./scripts/web/init-angular.js";
 import { initReactNativeProject } from "./scripts/mobile/init-react-native.js";
-import { initIonicProject } from "./scripts/mobile/init-ionic.js";
 import { initElectronProject } from "./scripts/desktop/init-electron.js";
 
 export async function platformSelector(answers, locationPath) {
@@ -22,10 +21,7 @@ export async function platformSelector(answers, locationPath) {
       case "React Native":
         initReactNativeProject(locationPath);
         break;
-      case "Ionic":
-        initIonicProject(locationPath);
-        break;
-      case "Electron":
+      case "Electron + React":
         initElectronProject(locationPath);
         break;
       default:
