@@ -24,7 +24,7 @@ export function initTypeScriptProject(projectPath) {
 
     // Install dev dependencies
     execSync(
-      "npm install typescript @types/express @types/node @types/swagger-ui-express @types/cors jest ts-jest @types/jest --save-dev",
+      "npm install typescript @types/express @types/node @types/swagger-ui-express @types/cors jest ts-jest @types/jest nodemon ts-node --save-dev",
       {
         cwd: projectPath,
         stdio: "inherit",
@@ -161,7 +161,7 @@ npm run dev
     const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
     pkg.scripts = pkg.scripts || {};
     pkg.scripts.build = "tsc";
-    pkg.scripts.dev = 'tsc-watch --onSuccess "node dist/index.js"';
+    pkg.scripts.dev = "nodemon --exec ts-node src/index.ts";
     pkg.scripts.start = "node dist/index.js";
     pkg.scripts.test = "jest";
     fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2));

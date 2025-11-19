@@ -13,7 +13,6 @@
     "init:next": "node front-end/scripts/web/init-next.js",
     "init:angular": "node front-end/scripts/web/init-angular.js",
     "init:reactnative": "node front-end/scripts/mobile/init-reactnative.js",
-    "init:ionic": "node front-end/scripts/mobile/init-ionic.js",
     "init:electron": "node front-end/scripts/desktop/init-electron.js"
   },
   "repository": {

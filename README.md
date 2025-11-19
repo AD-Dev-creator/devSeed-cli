@@ -28,10 +28,10 @@ npm install
 
 ## 🚀 Supported Technologies
 
-| 🖥️ **Back-End** | ![Node.js] | ![TypeScript] | ![Python]
-| 🎨 **Front-End** | ![Angular] | ![React.js] | ![Next.Ts]
-| 📱 **Mobile** | ![React Native]| ![Ionic]
-| 🖥️ **Desktop** | ![Electron]
+| 🖥️ **Back-End** | ![Node.js] | ![TypeScript] | ![Python] |
+| 🎨 **Front-End** | ![Angular] | ![React.js] | ![Next.Ts] |
+| 📱 **Mobile** | ![React Native]| ![Ionic] |
+| 🖥️ **Desktop** | ![Electron] |
 
 ---
 
