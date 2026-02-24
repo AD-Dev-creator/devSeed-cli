@@ -63,9 +63,23 @@ async function main() {
     backend = await select({
       message: "Select the Back-End technologies you want to use:",
       choices: [
-        { name: "Node.js + Express", value: "Node.js + Express" },
-        { name: "TypeScript + Express", value: "TypeScript + Express" },
-        { name: "Python + FastAPI", value: "Python + FastAPI" },
+        {
+          name: "Node.js",
+          value: "Node.js",
+          description:
+            "JavaScript runtime • Express framework • Fast development",
+        },
+        {
+          name: "TypeScript",
+          value: "TypeScript",
+          description: "Type-safe JavaScript • Prisma ORM • Production-ready",
+        },
+        {
+          name: "Python",
+          value: "Python",
+          description:
+            "FastAPI framework • Auto documentation • SQLite included",
+        },
       ],
     });
   }
@@ -76,17 +90,44 @@ async function main() {
     switch (projectType) {
       case "Web":
         frontendChoices = [
-          { name: "React", value: "React" },
-          { name: "Next", value: "Next" },
-          { name: "Angular", value: "Angular" },
+          {
+            name: "React",
+            value: "React",
+            description:
+              "Use React for building dynamic user interfaces with a component-based architecture, and Tailwind CSS for styling with utility-first CSS classes.",
+          },
+          {
+            name: "Next.js",
+            value: "Next",
+            description:
+              "Use Next.js with TypeScript for server-side rendering and static site generation, ideal for SEO and performance, and Tailwind CSS for styling with utility-first CSS classes.",
+          },
+          {
+            name: "Angular",
+            value: "Angular",
+            description:
+              "Use Angular for building robust and scalable web applications with a comprehensive framework and component-based architecture.",
+          },
         ];
         break;
       case "Mobile":
-        frontendChoices = [{ name: "React Native", value: "React Native" }];
+        frontendChoices = [
+          {
+            name: "React Native",
+            value: "React Native",
+            description:
+              "Use React Native for building applications that run on both iOS and Android with a single codebase and native performance.",
+          },
+        ];
         break;
       case "Desktop":
         frontendChoices = [
-          { name: "Electron + React", value: "Electron + React" },
+          {
+            name: "Electron",
+            value: "Electron",
+            description:
+              "Use Electron with React for building cross-platform desktop applications with web technologies, and Tailwind CSS for styling with utility-first CSS classes.",
+          },
         ];
         break;
       default:

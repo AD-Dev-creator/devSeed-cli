@@ -4,13 +4,13 @@ import { initPythonProject } from "./scripts/init-python.js";
 
 export async function backendSelector(answers, backendPath) {
   switch (answers.backend) {
-    case "Node.js + Express":
+    case "Node.js":
       initNodeProject(backendPath);
       break;
-    case "TypeScript + Express":
+    case "TypeScript":
       initTypeScriptProject(backendPath);
       break;
-    case "Python + FastAPI":
+    case "Python":
       initPythonProject(backendPath);
       break;
     default:

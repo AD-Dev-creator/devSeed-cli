@@ -20,6 +20,7 @@ export const typeScriptConfig = {
     "README.md",
     ".env.example",
     "docker-compose.yml",
+    "prisma.config.ts",
     "prisma/schema.prisma",
     "src/index.ts",
     "src/routes.ts",
