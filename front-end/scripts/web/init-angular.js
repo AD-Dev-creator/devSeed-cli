@@ -1,6 +1,8 @@
 import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
+import { angularConfig } from "../../templates/web/config-angular.js";
+import { angularTemplates } from "../../templates/web/templates-angular.js";
 
 export function initAngularProject(projectPath) {
   try {
@@ -26,40 +28,16 @@ export function initAngularProject(projectPath) {
       stdio: "inherit",
     });
 
-    const folders = ["src/app/components", "src/app/pages"];
-    folders.forEach((folder) => {
+    angularConfig.folders.forEach((folder) => {
       fs.mkdirSync(path.join(projectPath, folder), { recursive: true });
     });
 
-    const files = [".env", ".env.example"];
-    files.forEach((file) => {
-      fs.writeFileSync(path.join(projectPath, file), "");
+    angularConfig.files.forEach((file) => {
+      const content = angularTemplates[file];
+      if (content) {
+        fs.writeFileSync(path.join(projectPath, file), content);
+      }
     });
-
-    fs.writeFileSync(
-      path.join(projectPath, "tailwind.config.js"),
-      `/** @type {import('tailwindcss').Config} */
-    module.exports = {
-      content: [
-        "./src/**/*.{html,ts}",
-      ],
-      theme: {
-        extend: {
-          colors: {},
-          fontFamily: {},
-        },
-      },
-      plugins: [],
-    }
-    `
-    );
-
-    fs.writeFileSync(
-      path.join(projectPath, "src", "styles.css"),
-      `@tailwind base;
-@tailwind components;
-@tailwind utilities;`
-    );
 
     console.log("✅ Angular project initialized successfully!");
     console.log(`📁 Project created at: ${projectPath}`);
