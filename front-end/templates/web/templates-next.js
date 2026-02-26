@@ -54,7 +54,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 `,
 
   //* Global CSS File (Next.js convention)
-  "src/app/globals.css": `@tailwind base;
+  "src/app/globals.css": `@import 'animations.css';
+@tailwind base;
 @tailwind components;
 @tailwind utilities;`,
 

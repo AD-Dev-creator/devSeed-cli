@@ -28,6 +28,11 @@ export function initAngularProject(projectPath) {
       stdio: "inherit",
     });
 
+    exeSync(`npm install animate.css --save`, {
+      cwd: projectPath,
+      stdio: "inherit",
+    });
+
     angularConfig.folders.forEach((folder) => {
       fs.mkdirSync(path.join(projectPath, folder), { recursive: true });
     });

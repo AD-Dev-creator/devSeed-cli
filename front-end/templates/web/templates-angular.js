@@ -16,7 +16,8 @@ module.exports = {
 `,
 
   //* Style CSS File
-  "src/styles.css": `@tailwind base;
+  "src/styles.css": `@import 'animate.css';
+@tailwind base;
 @tailwind components;
 @tailwind utilities;`,
 };

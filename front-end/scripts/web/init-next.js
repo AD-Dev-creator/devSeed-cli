@@ -24,6 +24,12 @@ export function initNextProject(projectPath) {
       shell: true,
     });
 
+    execSync(`npm install animate.css --save`, {
+      cwd: projectPath,
+      stdio: "inherit",
+      shell: true,
+    });
+
     nextConfig.folders.forEach((folder) => {
       fs.mkdirSync(path.join(projectPath, folder), { recursive: true });
     });
