@@ -1,4 +1,5 @@
 export const angularTemplates = {
+  //* Tailwind CSS File
   "tailwind.config.js": `/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -14,6 +15,7 @@ module.exports = {
 }
 `,
 
+  //* Style CSS File
   "src/styles.css": `@tailwind base;
 @tailwind components;
 @tailwind utilities;`,
