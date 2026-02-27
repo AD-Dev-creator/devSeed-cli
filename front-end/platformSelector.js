@@ -21,7 +21,7 @@ export async function platformSelector(answers, locationPath) {
       case "React Native":
         initReactNativeProject(locationPath);
         break;
-      case "Electron + React":
+      case "Electron":
         initElectronProject(locationPath);
         break;
       default:

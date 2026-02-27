@@ -1,6 +1,8 @@
 import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
+import { reactConfig } from "../../templates/web/config-react.js";
+import { reactTemplate } from "../../templates/web/templates-react.js";
 
 export function initReactProject(projectPath) {
   try {
@@ -8,7 +10,7 @@ export function initReactProject(projectPath) {
       stdio: "inherit",
     });
 
-    execSync(`npm install axios react-router-dom lucide-react`, {
+    execSync(`npm install axios react-router-dom lucide-react `, {
       cwd: projectPath,
       stdio: "inherit",
     });
@@ -18,40 +20,21 @@ export function initReactProject(projectPath) {
       stdio: "inherit",
     });
 
-    const folders = ["src/components", "src/pages"];
-    folders.forEach((folder) => {
+    execSync(`npm install animate.css --save`, {
+      cwd: projectPath,
+      stdio: "inherit",
+    });
+
+    reactConfig.folders.forEach((folder) => {
       fs.mkdirSync(path.join(projectPath, folder), { recursive: true });
     });
 
-    const files = [".env", ".env.example"];
-    files.forEach((file) => {
-      fs.writeFileSync(path.join(projectPath, file), "");
+    reactConfig.files.forEach((file) => {
+      const content = reactTemplate[file];
+      if (content) {
+        fs.writeFileSync(path.join(projectPath, file), content);
+      }
     });
-
-    fs.writeFileSync(
-      path.join(projectPath, "tailwind.config.js"),
-      `/** @type {import('tailwindcss').Config} */
-    module.exports = {
-      content: [
-        "./src/**/*.{js,jsx,ts,tsx}",
-      ],
-      theme: {
-        extend: {
-          colors: {},
-          fontFamily: {},
-        },
-      },
-      plugins: [],
-    }
-    `
-    );
-
-    fs.writeFileSync(
-      path.join(projectPath, "src", "index.css"),
-      `@tailwind base;
-@tailwind components;
-@tailwind utilities;`
-    );
 
     console.log("✅ React project initialized successfully!");
     console.log(`📁 Project created at: ${projectPath}`);
