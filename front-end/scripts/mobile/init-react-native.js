@@ -1,6 +1,8 @@
 import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
+import { reactNativeConfig } from "../../templates/mobile/config-react-native.js";
+import { reactNativeTemplates } from "../../templates/mobile/templates-react-native.js";
 
 export function initReactNativeProject(projectPath) {
   try {
@@ -9,7 +11,7 @@ export function initReactNativeProject(projectPath) {
     });
 
     execSync(
-      `npm install axios lucide-react-native @react-navigation/native @react-navigation/native-stack`,
+      `npm install axios lucide-react-native @react-navigation/native @react-navigation/native-stack react-native-reanimated`,
       {
         cwd: projectPath,
         stdio: "inherit",
@@ -24,14 +26,16 @@ export function initReactNativeProject(projectPath) {
       }
     );
 
-    const folders = ["components/common", "services"];
-    folders.forEach((folder) => {
-      fs.mkdirSync(path.join(projectPath, folder), { recursive: true });
+    reactNativeConfig.folders.forEach((folder) => {
+      const folderPath = path.join(projectPath, folder);
+      fs.mkdirSync(folderPath, { recursive: true });
     });
 
-    const files = [".env", ".env.example"];
-    files.forEach((file) => {
-      fs.writeFileSync(path.join(projectPath, file), "");
+    reactNativeConfig.files.forEach((file) => {
+      const content = reactNativeTemplates[file];
+      if (content) {
+        fs.writeFileSync(path.join(projectPath, file), content);
+      }
     });
 
     console.log("✅ React Native project initialized successfully!");
