@@ -54,7 +54,7 @@ root.render(
   text-align: center;
 }`,
 
-  //* APP JS file (corrigé)
+  //* APP JS file
   "src/App.js": `import React from 'react';
 import './App.css';
 import 'animate.css';

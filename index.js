@@ -66,13 +66,13 @@ async function main() {
         {
           name: "Node.js",
           value: "Node.js",
-          description:
-            "JavaScript runtime • Express framework • Fast development",
+          description: "JavaScript runtime • Express framework",
         },
         {
           name: "TypeScript",
           value: "TypeScript",
-          description: "Type-safe JavaScript • Prisma ORM • Production-ready",
+          description:
+            "TypeScript • Express fremwork • Prisma ORM • Docker mySQL",
         },
         {
           name: "Python",
@@ -94,19 +94,19 @@ async function main() {
             name: "React",
             value: "React",
             description:
-              "Use React for building dynamic user interfaces with a component-based architecture, and Tailwind CSS for styling with utility-first CSS classes.",
+              "React • Axios for API calls • Tailwind CSS for styling",
           },
           {
             name: "Next.js",
             value: "Next",
             description:
-              "Use Next.js with TypeScript for server-side rendering and static site generation, ideal for SEO and performance, and Tailwind CSS for styling with utility-first CSS classes.",
+              "Next and TypeScript • Axios for API calls • Tailwind CSS for styling",
           },
           {
             name: "Angular",
             value: "Angular",
             description:
-              "Use Angular for building robust and scalable web applications with a comprehensive framework and component-based architecture.",
+              "Angular • Axios for API calls • Tailwind CSS for styling",
           },
         ];
         break;
@@ -115,8 +115,7 @@ async function main() {
           {
             name: "React Native",
             value: "React Native",
-            description:
-              "Use React Native for building applications that run on both iOS and Android with a single codebase and native performance.",
+            description: "React Native • Expo • Axios for API calls",
           },
         ];
         break;
@@ -126,7 +125,7 @@ async function main() {
             name: "Electron",
             value: "Electron",
             description:
-              "Use Electron with React for building cross-platform desktop applications with web technologies, and Tailwind CSS for styling with utility-first CSS classes.",
+              "Electron • React for UI • Axios for API calls • Tailwind CSS for styling",
           },
         ];
         break;
