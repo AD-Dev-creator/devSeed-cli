@@ -1,6 +1,8 @@
 import { execSync } from "child_process";
 import fs from "fs";
 import path from "path";
+import { nextConfig } from "../../templates/web/config-next.js";
+import { nextTemplate } from "../../templates/web/templates-next.js";
 
 export function initNextProject(projectPath) {
   try {
@@ -8,10 +10,13 @@ export function initNextProject(projectPath) {
       fs.mkdirSync(projectPath, { recursive: true });
     }
 
-    execSync(`npx create-next-app@latest "${projectPath}" --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"`, {
-      stdio: "inherit",
-      shell: true,
-    });
+    execSync(
+      `npx create-next-app@latest "${projectPath}" --typescript --tailwind --eslint --app --src-dir --import-alias "@/*"`,
+      {
+        stdio: "inherit",
+        shell: true,
+      }
+    );
 
     execSync(`npm install axios lucide-react`, {
       cwd: projectPath,
@@ -19,56 +24,22 @@ export function initNextProject(projectPath) {
       shell: true,
     });
 
-    const files = [".env", ".env.example"];
-    files.forEach((file) => {
-      fs.writeFileSync(path.join(projectPath, file), "");
+    execSync(`npm install animate.css --save`, {
+      cwd: projectPath,
+      stdio: "inherit",
+      shell: true,
     });
 
-    fs.writeFileSync(
-      path.join(projectPath, "tailwind.config.js"),
-      `/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
-  theme: {
-    extend: {
-      colors: {},
-      fontFamily: {},
-    },
-  },
-  plugins: [],
-}
-`
-    );
+    nextConfig.folders.forEach((folder) => {
+      fs.mkdirSync(path.join(projectPath, folder), { recursive: true });
+    });
 
-    // Créer le dossier components dans src
-    const componentsPath = path.join(projectPath, "src", "components");
-    if (!fs.existsSync(componentsPath)) {
-      fs.mkdirSync(componentsPath, { recursive: true });
-    }
-
-    // Vérifier si le fichier globals.css existe déjà et le mettre à jour
-    const globalsCssPath = path.join(projectPath, "src", "app", "globals.css");
-    if (fs.existsSync(globalsCssPath)) {
-      fs.writeFileSync(
-        globalsCssPath,
-        `@tailwind base;
-@tailwind components;
-@tailwind utilities;`
-      );
-    } else {
-      // Fallback pour l'ancienne structure
-      const fallbackPath = path.join(projectPath, "app", "globals.css");
-      if (fs.existsSync(fallbackPath)) {
-        fs.writeFileSync(
-          fallbackPath,
-          `@tailwind base;
-@tailwind components;
-@tailwind utilities;`
-        );
+    nextConfig.files.forEach((file) => {
+      const content = nextTemplate[file];
+      if (content) {
+        fs.writeFileSync(path.join(projectPath, file), content);
       }
-    }
+    });
 
     console.log("✅ Next.js project initialized successfully!");
     console.log(`📁 Project created at: ${projectPath}`);
